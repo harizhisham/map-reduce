@@ -25,4 +25,8 @@ visitee_namefirst,
 '''
 
 rdd = spark.sparkContextTextFile(data)
-rdd.mapPartitions()
+visitors_mapped = rdd.map(lambda x : ((x[0],x[1],x[2]),1))
+reduced_visitors = visitors_mapped.reduceByKey(lambda a,b : a+b)
+
+def get_top(n):
+    
